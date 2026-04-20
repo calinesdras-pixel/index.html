@@ -1,0 +1,54 @@
+ @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap');
+body {
+    background: url(./photo/bg4.jPG) center/cover;
+    font-family: Arimo;
+    min-height:  100vh
+      
+ } 
+ h1{
+   text-transform: uppercase;
+   letter-spacing: 3px;
+   text-align: center;
+   /* les tailles de polices sont en re; */
+   font-size:2.5rem ;
+    text-shadow: 3px 3px 8px #000000b8;
+    color: rgb(245, 236, 228);
+    font-family: "Cinzel", serif;
+ }
+ main{
+     min-height: 550px;
+     width: 60%;
+     background: rgba(11, 219, 66, 0.689);
+     margin: 0 auto;
+     border: 2px solid rgb(203, 142, 28);
+     border-radius: 30px;
+     box-shadow: 0px 0px 20px 4px rgb(253, 209, 128);
+     padding:15px ;
+     text-align: center;
+ }
+ .flexbox{
+    min-height: 10px;
+    min-width: 10px;
+    margin: 15;
+    padding: 5px; 
+ }
+h2{
+   letter-spacing: 3px;  
+   /* les tailles de polices sont en re; */
+   font-size:2.5rem ;
+    text-shadow: 3px 3px 8px #000000b8;
+    color: rgb(245, 236, 228);
+    font-family: "Cinzel", serif;
+    margin: 0;    
+}
+.flexbox button{
+    min-height: 45px;
+    min-width: 60px;
+    margin: 10px; 
+    background: rgb(203, 142, 28);
+    color: rgb(245, 236, 228);
+    border: 2px groove rgb(189, 189, 247);
+    border-radius: 15%;
+
+}
