@@ -42,15 +42,15 @@ h1 {
 }
 
 main {
-    min-height: 450px;
+    min-height: 350px;
 
     /* CORRECTION RESPONSIVE : on remplace width: 60% fixe
        par une combinaison width + max-width.
        - width: 90% → prend 90% sur mobile (plus de place)
        - max-width: 900px → ne s'élargit pas indéfiniment sur grand écran
        Avant : sur mobile 320px, 60% = 192px seulement → trop étroit */
-    width: 70%;
-    max-width: 900px;
+    width: 50%;
+    max-width: 600px;
 
     background: rgba(11, 219, 66, 0.689);
     margin: 0 auto;
@@ -110,6 +110,11 @@ h2 {
     color: rgb(245, 236, 228);
     border: 2px groove rgb(189, 189, 247);
     border-radius: 15%;
+    display: flex;
+    flex-direction: row;   /* boutons alignés horizontalement */
+    flex-wrap: wrap;       /* si trop étroits, ils passent à la ligne */
+    justify-content: center;
+    gap: 10px;
 
     /* AJOUT : taille de police lisible sur mobile */
     font-size: clamp(0.85rem, 2vw, 1rem);
