@@ -1,59 +1,188 @@
- @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+/* ============================================================
+   IMPORTS DE POLICES
+   On garde les mêmes polices Google Fonts que l'original.
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap');
+
+
+/* ============================================================
+   BODY
+   On utilise flexbox pour centrer le contenu verticalement
+   ET horizontalement sur tous les écrans.
+   - "display: flex" active le mode flexbox
+   - "justify-content: center" centre horizontalement
+   - "align-items: flex-start" colle le contenu en haut
+   - "padding" évite que le contenu touche les bords sur mobile
+   ============================================================ */
 body {
     background: url(hbd22.jpg) center/cover;
-    font-family: Arimo;
-    min-height:  100vh  
- } 
- main{
-     min-height: 50px;
-     width: 60%;
-     background: rgba(248, 237, 216, 0.932);
-     margin: 0 auto;
-     border: 2px solid rgb(21, 70, 193);
-     border-radius: 30px;
-     box-shadow: 0px 0px 20px 4px rgb(93, 111, 244);
-     padding:15px ;
-     text-align: center;
-     position: center;
+    font-family: Arimo, sans-serif; /* CORRECTION : ajout de "sans-serif" comme fallback */
+    min-height: 100vh;
+    display: flex;                  /* AJOUT : active le centrage flex */
+    justify-content: center;        /* AJOUT : centre main horizontalement */
+    align-items: flex-start;        /* AJOUT : le contenu part du haut */
+    padding: 20px;                  /* AJOUT : marge intérieure sur petits écrans */
+    box-sizing: border-box;         /* AJOUT : inclut le padding dans la largeur totale */
 }
- 
-h2{
-   letter-spacing: 3px;  
-   /* les tailles de polices sont en re; */
-   font-size:2.5rem ;
+
+
+/* ============================================================
+   MAIN
+   PROBLÈME ORIGINAL : "width: 60%" ne s'adapte pas aux petits
+   écrans. Sur un téléphone, 60% peut être trop étroit OU trop
+   large selon l'orientation.
+
+   SOLUTION :
+   - On utilise "width: min(60%, 800px)" : prend 60% de la
+     largeur SAUF si ça dépasse 800px.
+   - "max-width: 800px" empêche le bloc d'être trop large sur
+     grand écran.
+   - On supprime "position: center" qui est invalide en CSS.
+   ============================================================ */
+main {
+    min-height: 50px;
+    width: 90%;                     /* MODIFIÉ : 90% par défaut (mobile-first) */
+    max-width: 800px;               /* AJOUT : limite la largeur sur grands écrans */
+    background: rgba(248, 237, 216, 0.932);
+    margin: 0 auto;                 /* Centre le bloc si flexbox non supporté */
+    border: 2px solid rgb(21, 70, 193);
+    border-radius: 30px;
+    box-shadow: 0px 0px 20px 4px rgb(93, 111, 244);
+    padding: 15px;
+    text-align: center;
+    /* SUPPRIMÉ : "position: center" — cette valeur n'existe pas en CSS */
+    box-sizing: border-box;         /* AJOUT : le padding n'agrandit pas la largeur */
+}
+
+
+/* ============================================================
+   H2
+   PROBLÈME ORIGINAL : "font-size: 2.5rem" est trop grand sur
+   petits écrans. Le texte déborde ou compresse la mise en page.
+
+   SOLUTION : "clamp(taille_min, taille_fluide, taille_max)"
+   - 1.4rem  = taille minimum (petits téléphones)
+   - 4vw     = taille fluide (évolue avec la largeur de l'écran)
+   - 2.5rem  = taille maximum (grands écrans)
+   Ainsi la taille s'adapte AUTOMATIQUEMENT sans media queries.
+
+   CORRECTION : "margin-bottom: 5" → "margin-bottom: 5px"
+   (les valeurs CSS doivent avoir une unité)
+   ============================================================ */
+h2 {
+    letter-spacing: 3px;
+    font-size: clamp(1.4rem, 4vw, 2.5rem); /* MODIFIÉ : taille fluide avec clamp() */
     text-shadow: 3px 3px 8px #000000b8;
     color: rgb(21, 70, 193);
     font-family: "Cinzel", serif;
-    margin-bottom: 5;   
+    margin-bottom: 5px;             /* CORRECTION : ajout de "px" (valeur invalide sans unité) */
     margin-top: 0;
     text-align: center;
 }
-p{
-    font-family: roboto;
 
+
+/* ============================================================
+   P
+   CORRECTION : "font-family: roboto" sans guillemets et sans
+   fallback. On ajoute une police de secours générique.
+   ============================================================ */
+p {
+    font-family: 'Roboto', sans-serif; /* CORRECTION : guillemets + fallback */
+    font-size: clamp(0.9rem, 2.5vw, 1rem); /* AJOUT : taille fluide pour le corps */
+    line-height: 1.6;               /* AJOUT : meilleure lisibilité sur mobile */
 }
-button{
+
+
+/* ============================================================
+   BUTTON
+   PROBLÈME ORIGINAL : les boutons avec "margin: 20px" peuvent
+   dépasser les bords sur mobile.
+
+   SOLUTION :
+   - On réduit les marges sur petits écrans via la media query
+   - On ajoute "cursor: pointer" pour l'accessibilité
+   - On unifie border-radius (il était défini deux fois !)
+   ============================================================ */
+button {
     min-height: 45px;
     min-width: 60px;
-    margin: 20px; 
+    margin: 10px;                   /* MODIFIÉ : réduit de 20px à 10px, ajusté en media query */
     background: rgb(245, 236, 228);
-    color: rgb(245, 236, 228);
+    color: rgb(21, 70, 193);        /* CORRECTION : la couleur était identique au fond (invisible !) */
     border: 2px groove rgb(189, 189, 247);
-    border-radius: 20px;
+    border-radius: 15%;             /* CORRECTION : suppression du doublon "border-radius: 20px" */
     box-shadow: 0px 0px 20px 4px rgb(93, 111, 244);
-    border-radius: 15%;
-    font-family: georgia;
-
+    font-family: Georgia, serif;    /* CORRECTION : ajout du fallback "serif" */
+    cursor: pointer;                /* AJOUT : indique visuellement que c'est cliquable */
+    font-size: clamp(0.8rem, 2vw, 1rem); /* AJOUT : taille fluide */
 }
-@media screen and (max-width: 584) {
-    main{
-        width: 120px;
+
+
+/* ============================================================
+   MEDIA QUERIES — APPROCHE "MOBILE FIRST"
+   On définit d'abord les styles pour mobile (dans le CSS de
+   base ci-dessus), puis on AJOUTE des styles pour les écrans
+   plus grands.
+
+   PROBLÈME ORIGINAL : 
+   1. "@media screen and (max-width: 584)" → MANQUE "px" !
+      Sans unité, la règle est ignorée par le navigateur.
+   2. "font-size: 0.5 rem" et "font-size: 1 rem" → ESPACE
+      entre le chiffre et "rem" : valeur invalide en CSS.
+   3. On ciblait h1 qui n'est pas défini dans le CSS original.
+   ============================================================ */
+
+
+/* --- Petits téléphones (< 480px) --- */
+@media screen and (max-width: 480px) {   /* CORRECTION : ajout de "px" */
+    main {
+        width: 100%;                /* Prend toute la largeur sur très petit écran */
+        border-radius: 15px;        /* Réduit les coins arrondis */
+        padding: 10px;
     }
-    h1{
-        font-size: 0.5 rem;
+
+    h2 {
+        font-size: 1.4rem;          /* CORRECTION : suppression de l'espace "1 rem" → "1.4rem" */
+        letter-spacing: 1px;        /* Réduit l'espacement des lettres */
     }
-    h2{
-        font-size: 1 rem;
+
+    button {
+        margin: 8px;                /* Moins de marge sur mobile */
+        min-width: 50px;
+    }
+}
+
+
+/* --- Tablettes (481px → 768px) --- */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    main {
+        width: 85%;                 /* Un peu plus large que sur mobile */
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    button {
+        margin: 12px;
+    }
+}
+
+
+/* --- Grands écrans (> 1200px) --- */
+@media screen and (min-width: 1200px) {
+    main {
+        /* max-width: 800px défini plus haut s'applique déjà,
+           mais on peut renforcer le padding pour aérer */
+        padding: 30px;
+    }
+
+    h2 {
+        font-size: 2.5rem;          /* Taille maximale sur grand écran */
+    }
+
+    button {
+        margin: 20px;               /* Retrouve la marge d'origine sur grand écran */
     }
 }
