@@ -13,9 +13,6 @@ body {
     font-family: Arimo;
     min-height: 100vh;
 
-    /* AJOUT RESPONSIVE : évite le défilement horizontal
-       sur mobile si un élément dépasse la largeur */
-    overflow-x: hidden;
 }
 
 h1 {
@@ -83,12 +80,6 @@ main {
 
     padding: 5px;
 
-    /* AJOUT RESPONSIVE : flexbox s'adapte naturellement si on
-       l'active ici. Les boutons passeront à la ligne automatiquement. */
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
 }
 
 h2 {
@@ -153,7 +144,7 @@ h2 {
 
     main {
         /* Presque toute la largeur sur petit téléphone */
-        width: 97%;
+        width: 67%;
         min-height: auto; /* On retire la hauteur minimale fixe :
                              sur mobile le contenu dicte la hauteur */
         border-radius: 15px;
