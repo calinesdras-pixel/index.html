@@ -42,14 +42,14 @@ h1 {
 }
 
 main {
-    min-height: 550px;
+    min-height: 450px;
 
     /* CORRECTION RESPONSIVE : on remplace width: 60% fixe
        par une combinaison width + max-width.
        - width: 90% → prend 90% sur mobile (plus de place)
        - max-width: 900px → ne s'élargit pas indéfiniment sur grand écran
        Avant : sur mobile 320px, 60% = 192px seulement → trop étroit */
-    width: 90%;
+    width: 70%;
     max-width: 900px;
 
     background: rgba(11, 219, 66, 0.689);
