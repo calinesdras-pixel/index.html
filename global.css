@@ -1,65 +1,204 @@
- @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap');
+
+/* =============================================
+   BASE : styles par défaut (grands écrans)
+   Le CSS fonctionne du plus grand au plus petit.
+   On écrit d'abord le style "desktop", puis on
+   adapte avec des @media pour les petits écrans.
+   ============================================= */
+
 body {
-    background: url(bg4.jpg) center/cover;
+    background: url(./photo/bg4.jPG) center/cover;
     font-family: Arimo;
-    min-height:  100vh
-      
- } 
- h1{
-   text-transform: uppercase;
-   letter-spacing: 3px;
-   text-align: center;
-   /* les tailles de polices sont en re; */
-   font-size:2.5rem ;
+    min-height: 100vh;
+
+    /* AJOUT RESPONSIVE : évite le défilement horizontal
+       sur mobile si un élément dépasse la largeur */
+    overflow-x: hidden;
+}
+
+h1 {
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-align: center;
+
+    /* BONNE PRATIQUE : clamp() adapte automatiquement
+       la taille entre un min, une valeur fluide et un max.
+       Ici : jamais moins de 1.4rem, idéalement 4vw, jamais plus de 2.5rem.
+       Cela évite d'écrire plusieurs @media juste pour les titres. */
+    font-size: clamp(1.4rem, 4vw, 2.5rem);
+
     text-shadow: 3px 3px 8px #000000b8;
     color: rgb(245, 236, 228);
     font-family: "Cinzel", serif;
- }
- main{
-     min-height: 550px;
-     width: 60%;
-     background: rgba(11, 219, 66, 0.689);
-     margin: 0 auto;
-     border: 2px solid rgb(203, 142, 28);
-     border-radius: 30px;
-     box-shadow: 0px 0px 20px 4px rgb(253, 209, 128);
-     padding:15px ;
-     text-align: center;
- }
- .flexbox{
+
+    /* AJOUT RESPONSIVE : sur mobile, 3px d'écart entre les lettres
+       peut déborder. On réduit avec clamp. */
+    letter-spacing: clamp(1px, 0.5vw, 3px);
+
+    /* AJOUT : marge verticale pour respirer sur mobile */
+    margin: 15px 10px;
+}
+
+main {
+    min-height: 550px;
+
+    /* CORRECTION RESPONSIVE : on remplace width: 60% fixe
+       par une combinaison width + max-width.
+       - width: 90% → prend 90% sur mobile (plus de place)
+       - max-width: 900px → ne s'élargit pas indéfiniment sur grand écran
+       Avant : sur mobile 320px, 60% = 192px seulement → trop étroit */
+    width: 90%;
+    max-width: 900px;
+
+    background: rgba(11, 219, 66, 0.689);
+    margin: 0 auto;
+
+    /* AJOUT : marge verticale pour que le contenu ne colle pas
+       aux bords de la page sur mobile */
+    margin: 20px auto;
+
+    border: 2px solid rgb(203, 142, 28);
+    border-radius: 30px;
+    box-shadow: 0px 0px 20px 4px rgb(253, 209, 128);
+
+    /* CORRECTION : padding fixe → padding fluide avec clamp.
+       Sur petit écran le padding ne "mange" plus trop de place. */
+    padding: clamp(10px, 3vw, 15px);
+
+    text-align: center;
+
+    /* AJOUT : évite que le contenu texte déborde sur mobile */
+    word-wrap: break-word;
+}
+
+.flexbox {
     min-height: 10px;
     min-width: 10px;
-    margin: 15;
-    padding: 5px; 
- }
-h2{
-   letter-spacing: 3px;  
-   /* les tailles de polices sont en re; */
-   font-size:2.5rem ;
+
+    /* CORRECTION : margin: 15 n'a pas d'unité → ignoré par le navigateur !
+       On corrige en ajoutant px */
+    margin: 15px;
+
+    padding: 5px;
+
+    /* AJOUT RESPONSIVE : flexbox s'adapte naturellement si on
+       l'active ici. Les boutons passeront à la ligne automatiquement. */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    /* Même logique que h1 : taille fluide entre 1.2rem et 2.5rem */
+    font-size: clamp(1.2rem, 3.5vw, 2.5rem);
+
     text-shadow: 3px 3px 8px #000000b8;
     color: rgb(245, 236, 228);
     font-family: "Cinzel", serif;
-    margin: 0;    
+    margin: 0;
+    letter-spacing: clamp(1px, 0.5vw, 3px);
 }
-.flexbox button{
+
+.flexbox button {
     min-height: 45px;
     min-width: 60px;
-    margin: 10px; 
+    margin: 10px;
     background: rgb(203, 142, 28);
     color: rgb(245, 236, 228);
     border: 2px groove rgb(189, 189, 247);
     border-radius: 15%;
 
+    /* AJOUT : taille de police lisible sur mobile */
+    font-size: clamp(0.85rem, 2vw, 1rem);
+
+    /* AJOUT : curseur pointer pour indiquer que c'est cliquable */
+    cursor: pointer;
 }
-@media screen and (max-width: 584) {
-    main{
-        width: 120px;
+
+
+/* =============================================
+   MEDIA QUERIES — adaptation par paliers
+   On utilise des unités (px) après max-width !
+   ERREUR dans le code d'origine : max-width: 584
+   sans unité → la règle était IGNORÉE par le navigateur.
+   ============================================= */
+
+/* --- Tablettes et petits laptops (max 768px) --- */
+@media screen and (max-width: 768px) {
+
+    main {
+        /* Sur tablette, on donne plus de largeur */
+        width: 95%;
+        border-radius: 20px; /* Coins légèrement moins arrondis */
     }
-    h1{
-        font-size: 0.5 rem;
+
+    .flexbox button {
+        /* Les boutons prennent plus de place pour être
+           plus faciles à toucher sur écran tactile */
+        min-height: 50px;
+        min-width: 80px;
     }
-    h2{
-        font-size: 1 rem;
+}
+
+/* --- Smartphones (max 480px) --- */
+@media screen and (max-width: 480px) {
+
+    main {
+        /* Presque toute la largeur sur petit téléphone */
+        width: 97%;
+        min-height: auto; /* On retire la hauteur minimale fixe :
+                             sur mobile le contenu dicte la hauteur */
+        border-radius: 15px;
+
+        /* Marge réduite pour maximiser l'espace utile */
+        margin: 10px auto;
+    }
+
+    /* CORRECTION de l'erreur d'origine :
+       "font-size: 0.5 rem" avec un espace → invalide !
+       CSS n'accepte pas d'espace entre le nombre et l'unité. */
+    h1 {
+        font-size: 1.3rem; /* Lisible mais compact */
+        letter-spacing: 1px;
+    }
+
+    /* CORRECTION : "font-size: 1 rem" avec espace → invalide !
+       On écrit correctement "1rem" sans espace. */
+    h2 {
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+    }
+
+    .flexbox {
+        margin: 8px;
+        padding: 3px;
+    }
+
+    .flexbox button {
+        /* Sur très petit écran, les boutons s'adaptent
+           pour ne pas déborder */
+        min-width: 50px;
+        margin: 6px;
+        font-size: 0.85rem;
+    }
+}
+
+/* --- Très petits écrans (max 320px) --- */
+@media screen and (max-width: 320px) {
+
+    h1 {
+        font-size: 1.1rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+
+    main {
+        padding: 8px;
+        border-radius: 10px;
     }
 }
