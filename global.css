@@ -1,189 +1,266 @@
+/* =====================================================
+   IMPORTS DE POLICES
+   ===================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap');
 
-/* =============================================
-   BASE : styles par défaut (grands écrans)
-   Le CSS fonctionne du plus grand au plus petit.
-   On écrit d'abord le style "desktop", puis on
-   adapte avec des @media pour les petits écrans.
-   ============================================= */
 
-body {
-    background: url(bg4.jpg) center/cover;
-    font-family: Arimo;
-    min-height: 100vh;
-
+/* =====================================================
+   RESET & BASE
+   Le box-sizing: border-box fait que padding et border
+   sont INCLUS dans la largeur totale de l'élément.
+   Sans ça, un élément à width:100% + padding déborde.
+   ===================================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
+body {
+    background: url(bg4.jpg.jpg) center/cover;
+    /* no-repeat évite la répétition de l'image sur petits écrans */
+    background-repeat: no-repeat;
+    /* fixed : l'image reste fixe pendant le scroll (effet parallaxe) */
+    background-attachment: fixed;
+    font-family: Arimo, sans-serif;
+    min-height: 100vh;
+
+    /* padding vertical pour que le contenu ne colle pas aux bords
+       sur mobile — ici 20px en haut/bas */
+    padding: 20px 0;
+}
+
+
+/* =====================================================
+   H1
+   On utilise clamp() pour un font-size FLUIDE :
+   clamp(valeur-min, valeur-preferee, valeur-max)
+   → min 1.4rem, idéal 4vw (4% de la largeur écran),
+     max 2.5rem. Fonctionne sans media query !
+   ===================================================== */
 h1 {
     text-transform: uppercase;
     letter-spacing: 3px;
     text-align: center;
 
-    /* BONNE PRATIQUE : clamp() adapte automatiquement
-       la taille entre un min, une valeur fluide et un max.
-       Ici : jamais moins de 1.4rem, idéalement 4vw, jamais plus de 2.5rem.
-       Cela évite d'écrire plusieurs @media juste pour les titres. */
+    /* clamp() : la taille s'adapte automatiquement à l'écran */
     font-size: clamp(1.4rem, 4vw, 2.5rem);
 
     text-shadow: 3px 3px 8px #000000b8;
     color: rgb(245, 236, 228);
     font-family: "Cinzel", serif;
+    margin: 0 0 15px 0;
 
-    /* AJOUT RESPONSIVE : sur mobile, 3px d'écart entre les lettres
-       peut déborder. On réduit avec clamp. */
-    letter-spacing: clamp(1px, 0.5vw, 3px);
-
-    /* AJOUT : marge verticale pour respirer sur mobile */
-    margin: 15px 10px;
+    /* word-break : si un mot est trop long il se coupe,
+       pas débordement hors de l'écran */
+    word-break: break-word;
 }
 
+
+/* =====================================================
+   MAIN — Le conteneur principal
+   
+   PROBLÈME ORIGINAL : width: 60% est trop étroit sur
+   petits écrans. Sur un téléphone de 375px → 225px
+   seulement, trop serré.
+
+   SOLUTION : on utilise width: min(60%, 900px) +
+   un padding horizontal pour les petits écrans,
+   et on laisse les media queries affiner.
+   ===================================================== */
 main {
-    min-height: 350px;
+    min-height: 550px;
 
-    /* CORRECTION RESPONSIVE : on remplace width: 60% fixe
-       par une combinaison width + max-width.
-       - width: 90% → prend 90% sur mobile (plus de place)
-       - max-width: 900px → ne s'élargit pas indéfiniment sur grand écran
-       Avant : sur mobile 320px, 60% = 192px seulement → trop étroit */
-    width: 50%;
-    max-width: 600px;
+    /* width en % mais avec une limite haute de 900px */
+    width: min(60%, 900px);
 
-    background: rgba(11, 219, 66, 0.689);
-    margin: 0 auto;
+     background: rgba(11, 219, 66, 0.689);
+     margin: 0 auto;
+     border: 2px solid rgb(203, 142, 28);
+     border-radius: 30px;
+     box-shadow: 0px 0px 20px 4px rgb(253, 209, 128);
 
-    /* AJOUT : marge verticale pour que le contenu ne colle pas
-       aux bords de la page sur mobile */
-    margin: 20px auto;
-
-    border: 2px solid rgb(203, 142, 28);
-    border-radius: 30px;
-    box-shadow: 0px 0px 20px 4px rgb(253, 209, 128);
-
-    /* CORRECTION : padding fixe → padding fluide avec clamp.
-       Sur petit écran le padding ne "mange" plus trop de place. */
-    padding: clamp(10px, 3vw, 15px);
+    /* padding en % horizontal = s'adapte à la largeur du conteneur */
+    padding: 20px 15px;
 
     text-align: center;
-
-    /* AJOUT : évite que le contenu texte déborde sur mobile */
-    word-wrap: break-word;
 }
 
+
+/* =====================================================
+   FLEXBOX UTILITAIRE
+   CORRECTION : margin: 15 n'est pas valide en CSS.
+   Les valeurs de taille NÉCESSITENT une unité (px, rem…).
+   ===================================================== */
 .flexbox {
     min-height: 10px;
     min-width: 10px;
 
-    /* CORRECTION : margin: 15 n'a pas d'unité → ignoré par le navigateur !
-       On corrige en ajoutant px */
+    /* CORRIGÉ : 15 → 15px */
     margin: 15px;
-
     padding: 5px;
-
 }
 
+
+/* =====================================================
+   H2
+   Même technique clamp() que h1.
+   CORRECTION : margin-bottom: 5 → 5px (unité manquante)
+   ===================================================== */
 h2 {
-    /* Même logique que h1 : taille fluide entre 1.2rem et 2.5rem */
+    letter-spacing: 3px;
+
+    /* clamp() fluide */
     font-size: clamp(1.2rem, 3.5vw, 2.5rem);
 
     text-shadow: 3px 3px 8px #000000b8;
     color: rgb(245, 236, 228);
     font-family: "Cinzel", serif;
-    margin: 0;
-    letter-spacing: clamp(1px, 0.5vw, 3px);
+
+    /* CORRIGÉ : 5 → 5px */
+    margin-bottom: 5px;
+    margin-top: 0;
+    text-align: center;
+    word-break: break-word;
 }
 
-.flexbox button {
-    min-height: 45px;
-    min-width: 60px;
-    margin: 10px;
-    background: rgb(203, 142, 28);
-    color: rgb(245, 236, 228);
-    border: 2px groove rgb(189, 189, 247);
-    border-radius: 15%;
-    display: flex;
-    flex-direction: row;   /* boutons alignés horizontalement */
-    flex-wrap: wrap;       /* si trop étroits, ils passent à la ligne */
-    justify-content: center;
-    gap: 10px;
 
-    /* AJOUT : taille de police lisible sur mobile */
+   BOUTONS
+   Sur mobile, les boutons trop petits sont difficiles
+   à taper avec le pouce.
+   Recommandation accessibilité : zone tactile ≥ 44px.
+   ===================================================== */
+.flexbox button {
+    min-height: 44px;  /* accessibilité tactile */
+    min-width: 80px;
+    margin: 20px;
+
+    background: rgb(245, 236, 228);
+    color: rgb(50, 50, 100); /* CORRECTION : couleur texte lisible (était blanc sur blanc !) */
+
+    border: 2px groove rgb(189, 189, 247);
+    border-radius: 15px; /* CORRECTION : 15% n'est pas standard pour border-radius */
+    box-shadow: 0px 0px 20px 4px rgb(93, 111, 244);
+
+    font-family: Georgia, serif;
     font-size: clamp(0.85rem, 2vw, 1rem);
 
-    /* AJOUT : curseur pointer pour indiquer que c'est cliquable */
+    /* cursor pointer = indique visuellement que c'est cliquable */
     cursor: pointer;
+
+    /* transition douce au survol */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 28px 6px rgb(93, 111, 244);
 }
 
 
-/* =============================================
-   MEDIA QUERIES — adaptation par paliers
-   On utilise des unités (px) après max-width !
-   ERREUR dans le code d'origine : max-width: 584
-   sans unité → la règle était IGNORÉE par le navigateur.
-   ============================================= */
+/* =====================================================
+   MEDIA QUERIES — POINTS DE RUPTURE RESPONSIVES
 
-/* --- Tablettes et petits laptops (max 768px) --- */
+   On part du plus grand vers le plus petit (desktop-first)
+   car le code de base est écrit pour desktop.
+
+   CORRECTION MAJEURE dans l'original :
+   @media screen and (max-width: 584)  ← SANS UNITÉ = invalide !
+   Il FAUT écrire : max-width: 584px
+   ===================================================== */
+
+
+/* --- TABLETTES (max 1024px) --- */
+@media screen and (max-width: 1024px) {
+    main {
+        /* On passe à 75% pour ne pas perdre d'espace
+           sur tablette en mode portrait */
+        width: 75%;
+    }
+}
+
+
+/* --- PETITES TABLETTES / GRANDS MOBILES (max 768px) --- */
 @media screen and (max-width: 768px) {
-
     main {
-        /* Sur tablette, on donne plus de largeur */
-        width: 95%;
-        border-radius: 20px; /* Coins légèrement moins arrondis */
+        /* On élargit encore */
+        width: 88%;
+        border-radius: 20px;
+
+        /* min-height réduit : moins de vide sur petits écrans */
+        min-height: auto;
     }
 
-    .flexbox button {
-        /* Les boutons prennent plus de place pour être
-           plus faciles à toucher sur écran tactile */
-        min-height: 50px;
-        min-width: 80px;
+    h1 {
+        /* letter-spacing réduit : 3px peut serrer les lettres sur mobile */
+        letter-spacing: 1.5px;
+    }
+
+    h2 {
+        letter-spacing: 1.5px;
+    }
+
+    button {
+        /* Sur mobile, on réduit la marge pour qu'ils ne débordent pas */
+        margin: 10px;
     }
 }
 
-/* --- Smartphones (max 480px) --- */
+
+/* --- MOBILES (max 480px) --- */
 @media screen and (max-width: 480px) {
+    body {
+        /* padding latéral pour que rien ne colle aux bords de l'écran */
+        padding: 10px;
+
+        /* Sur mobile, background-attachment: fixed peut être lent,
+           on le désactive */
+        background-attachment: scroll;
+    }
 
     main {
-        /* Presque toute la largeur sur petit téléphone */
-        width: 67%;
-        min-height: auto; /* On retire la hauteur minimale fixe :
-                             sur mobile le contenu dicte la hauteur */
+        /* Presque toute la largeur sur mobile */
+        width: 95%;
+        padding: 15px 10px;
         border-radius: 15px;
 
-        /* Marge réduite pour maximiser l'espace utile */
-        margin: 10px auto;
+        /* On retire min-height sur mobile — la hauteur suit le contenu */
+        min-height: unset;
     }
 
-    /* CORRECTION de l'erreur d'origine :
-       "font-size: 0.5 rem" avec un espace → invalide !
-       CSS n'accepte pas d'espace entre le nombre et l'unité. */
+    /* Les clamp() gèrent déjà les fontes,
+       mais on force ici si nécessaire */
     h1 {
-        font-size: 1.3rem; /* Lisible mais compact */
+        font-size: clamp(1.1rem, 5vw, 1.6rem);
         letter-spacing: 1px;
     }
 
-    /* CORRECTION : "font-size: 1 rem" avec espace → invalide !
-       On écrit correctement "1rem" sans espace. */
     h2 {
-        font-size: 1.1rem;
+        font-size: clamp(1rem, 4.5vw, 1.4rem);
         letter-spacing: 1px;
     }
 
-    .flexbox {
-        margin: 8px;
-        padding: 3px;
+    p {
+        font-size: 1rem;
     }
 
-    .flexbox button {
-        /* Sur très petit écran, les boutons s'adaptent
-           pour ne pas déborder */
-        min-width: 50px;
-        margin: 6px;
-        font-size: 0.85rem;
+    button {
+        /* Sur très petits écrans, les boutons prennent 
+           plus de place pour rester facilement cliquables */
+        min-width: 100px;
+        margin: 8px;
     }
 }
 
-/* --- Très petits écrans (max 320px) --- */
+
+/* --- TRÈS PETITS MOBILES (max 320px) --- */
 @media screen and (max-width: 320px) {
+    main {
+        width: 100%;
+        border-radius: 10px;
+        padding: 10px 8px;
+    }
 
     h1 {
         font-size: 1.1rem;
@@ -193,8 +270,7 @@ h2 {
         font-size: 1rem;
     }
 
-    main {
-        padding: 8px;
-        border-radius: 10px;
+    p {
+        font-size: 0.9rem;
     }
 }
