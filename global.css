@@ -18,7 +18,7 @@
 }
 
 body {
-    background: url(bg4.jpg.jpg) center/cover;
+    background: url(bg4.jpg) center/cover;
     /* no-repeat évite la répétition de l'image sur petits écrans */
     background-repeat: no-repeat;
     /* fixed : l'image reste fixe pendant le scroll (effet parallaxe) */
@@ -132,8 +132,8 @@ h2 {
    Recommandation accessibilité : zone tactile ≥ 44px.
    ===================================================== */
 .flexbox button{
-    min-height: 35px;
-    min-width: 50px;
+    min-height: 45px;
+    min-width: 60px;
     margin: 5px; 
     background: rgb(203, 142, 28);
     color: rgb(245, 236, 228);
@@ -227,9 +227,6 @@ h2 {
         letter-spacing: 1px;
     }
 
-    p {
-        font-size: 1rem;
-    }
 }
 
 
