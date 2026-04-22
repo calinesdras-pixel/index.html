@@ -134,7 +134,7 @@ h2 {
 .flexbox button{
     min-height: 45px;
     min-width: 60px;
-    margin: 5px; 
+    margin: 10px; 
     background: rgb(203, 142, 28);
     color: rgb(245, 236, 228);
     border: 2px groove rgb(189, 189, 247);
