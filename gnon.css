@@ -19,11 +19,7 @@ body {
     background: url(hbd22.jpg) center/cover;
     font-family: Arimo, sans-serif; /* CORRECTION : ajout de "sans-serif" comme fallback */
     min-height: 100vh;
-    display: flex;                  /* AJOUT : active le centrage flex */
-    justify-content: center;        /* AJOUT : centre main horizontalement */
-    align-items: flex-start;        /* AJOUT : le contenu part du haut */
-    padding: 20px;                  /* AJOUT : marge intérieure sur petits écrans */
-    box-sizing: border-box;         /* AJOUT : inclut le padding dans la largeur totale */
+
 }
 
 
@@ -42,7 +38,7 @@ body {
    ============================================================ */
 main {
     min-height: 50px;
-    width: 90%;                     /* MODIFIÉ : 90% par défaut (mobile-first) */
+    width: 50%;                     /* MODIFIÉ : 90% par défaut (mobile-first) */
     max-width: 800px;               /* AJOUT : limite la largeur sur grands écrans */
     background: rgba(248, 237, 216, 0.932);
     margin: 0 auto;                 /* Centre le bloc si flexbox non supporté */
