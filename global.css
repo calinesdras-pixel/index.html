@@ -131,20 +131,14 @@ h2 {
    à taper avec le pouce.
    Recommandation accessibilité : zone tactile ≥ 44px.
    ===================================================== */
-.flexbox button {
-    min-height: 44px;  /* accessibilité tactile */
-    min-width: 80px;
-    margin: 20px;
-
-    background: rgb(245, 236, 228);
-    color: rgb(50, 50, 100); /* CORRECTION : couleur texte lisible (était blanc sur blanc !) */
-
+.flexbox button{
+    min-height: 45px;
+    min-width: 60px;
+    margin: 10px; 
+    background: rgb(203, 142, 28);
+    color: rgb(245, 236, 228);
     border: 2px groove rgb(189, 189, 247);
-    border-radius: 15px; /* CORRECTION : 15% n'est pas standard pour border-radius */
-    box-shadow: 0px 0px 20px 4px rgb(93, 111, 244);
-
-    font-family: Georgia, serif;
-    font-size: clamp(0.85rem, 2vw, 1rem);
+    border-radius: 15%;
 
     /* cursor pointer = indique visuellement que c'est cliquable */
     cursor: pointer;
@@ -153,10 +147,7 @@ h2 {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 0px 28px 6px rgb(93, 111, 244);
-}
+
 
 
 /* =====================================================
@@ -243,13 +234,6 @@ button:hover {
 
     p {
         font-size: 1rem;
-    }
-
-    button {
-        /* Sur très petits écrans, les boutons prennent 
-           plus de place pour rester facilement cliquables */
-        min-width: 100px;
-        margin: 8px;
     }
 }
 
