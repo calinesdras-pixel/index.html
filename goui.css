@@ -127,7 +127,9 @@ h2 {
     text-align: center;
     word-break: break-word;
 }
-
+h3{
+   font-size: 2rem;
+}
 
 /* =====================================================
    PARAGRAPHES
